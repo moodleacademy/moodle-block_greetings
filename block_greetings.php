@@ -126,7 +126,11 @@ class block_greetings extends block_base {
 
                 $text .= $OUTPUT->box_start('card-columns');
 
-                $cardbackgroundcolor = get_config('block_greetings', 'messagecardbgcolor');
+                // Card background colour.
+                // Use value from block instance, if set. Otherwise use global value.
+                $cardbackgroundcolor = isset($this->config->messagecardbgcolor)
+                                        ? $this->config->messagecardbgcolor
+                                        : get_config('block_greetings', 'messagecardbgcolor');
 
                 foreach ($messages as $m) {
                     $text .= html_writer::start_tag('div', array('class' => 'card', 'style' => "background: $cardbackgroundcolor"));

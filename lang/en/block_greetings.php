@@ -47,5 +47,6 @@ $string['greetings:deleteownmessage'] = 'Delete own message on the Greetings wal
 $string['greetings:deleteanymessage'] = 'Delete any message on the Greetings wall';
 $string['messagecardbgcolor'] = 'Message card color';
 $string['messagecardbgcolordesc'] = 'Background color of the message card';
+$string['messagecardbgcolor_help'] = 'Background color of the message card';
 $string['greetings'] = 'Greetings';
 $string['hello'] = 'Hello World';
