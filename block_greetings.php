@@ -128,7 +128,7 @@ class block_greetings extends block_base {
 
                 // Card background colour.
                 // Use value from block instance, if set. Otherwise use global value.
-                $cardbackgroundcolor = isset($this->config->messagecardbgcolor)
+                $cardbackgroundcolor = (isset($this->config->messagecardbgcolor) && !empty($this->config->messagecardbgcolor))
                                         ? $this->config->messagecardbgcolor
                                         : get_config('block_greetings', 'messagecardbgcolor');
 
