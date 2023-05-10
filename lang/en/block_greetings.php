@@ -26,3 +26,26 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Greetings';
+$string['greetings:myaddinstance'] = 'Add a new Greetings block to Dashboard';
+$string['greetinguser'] = 'Greetings, user.';
+$string['greetingloggedinuser'] = 'Greetings, {$a}.';
+$string['greetinguserau'] = 'Hello, {$a}.';
+$string['greetinguseres'] = 'Hola, {$a}.';
+$string['greetinguserfj'] = 'Bula, {$a}.';
+$string['greetingusernz'] = 'Kia Ora, {$a}.';
+$string['yourmessage'] = 'Your message';
+$string['yourmessagehint'] = 'Add your message here...';
+$string['cannotaddgreeting'] = 'Sorry. You cannot post a greeting message.';
+$string['editmessage'] = 'Edit message';
+$string['norecordfound'] = 'No record found!';
+$string['cannoteditmessage'] = 'You cannot edit this message';
+$string['postedby'] = 'Posted by {$a}.';
+$string['nomessages'] = 'No messages posted yet.';
+$string['greetings:viewmessages'] = 'View messages on the Greetings wall';
+$string['greetings:postmessages'] = 'Post a new message on the Greetings wall';
+$string['greetings:deleteownmessage'] = 'Delete own message on the Greetings wall';
+$string['greetings:deleteanymessage'] = 'Delete any message on the Greetings wall';
+$string['messagecardbgcolor'] = 'Message card color';
+$string['messagecardbgcolordesc'] = 'Background color of the message card';
+$string['greetings'] = 'Greetings';
+$string['hello'] = 'Hello World';

@@ -25,11 +25,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-if ($hassiteconfig) {
-    $settings = new admin_settingpage('block_greetings_settings', new lang_string('pluginname', 'block_greetings'));
-
-    // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
-    if ($ADMIN->fulltree) {
-        // TODO: Define actual plugin settings page and add it to the tree - {@link https://docs.moodle.org/dev/Admin_settings}.
-    }
+if ($ADMIN->fulltree) {
+    $settings->add(new admin_setting_configtext(
+        'block_greetings/messagecardbgcolor',
+        get_string('messagecardbgcolor', 'block_greetings'),
+        get_string('messagecardbgcolordesc', 'block_greetings'),
+        '#FFFFFF',
+    ));
 }
