@@ -1,8 +1,8 @@
 # Greetings #
 
-TODO Describe the plugin shortly here.
+A block to post greeting messages on the Dashboard.
 
-TODO Provide more detailed description here.
+This block is a port of the [local_greetings](https://github.com/moodleacademy/moodle-local_greetings) plugin. This is a sample plugin created for use in Moodle Academy courses.
 
 ## Installing via uploaded ZIP file ##
 
