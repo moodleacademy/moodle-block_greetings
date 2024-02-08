@@ -93,7 +93,7 @@ class block_greetings extends block_base {
             $messageform = new \block_greetings\form\message_form();
 
             if ($data = $messageform->get_data()) {
-                require_capability('local/greetings:postmessages', $context);
+                require_capability('block/greetings:postmessages', $context);
 
                 $message = required_param('message', PARAM_TEXT);
 
@@ -113,7 +113,7 @@ class block_greetings extends block_base {
                 $text .= $messageform->render();
             }
 
-            if (has_capability('local/greetings:viewmessages', $context)) {
+            if (has_capability('block/greetings:viewmessages', $context)) {
                 $userfields = \core_user\fields::for_name()->with_identity($context);
                 $userfieldssql = $userfields->get_sql('u');
 
