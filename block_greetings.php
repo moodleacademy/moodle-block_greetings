@@ -76,7 +76,7 @@ class block_greetings extends block_base {
                 $id = required_param('id', PARAM_TEXT);
 
                 if ($deleteanypost || $deletepost) {
-                    $params = array('id' => $id);
+                    $params = ['id' => $id];
 
                     // Users without permission should only delete their own post.
                     if (!$deleteanypost) {
@@ -133,19 +133,19 @@ class block_greetings extends block_base {
                                         : get_config('block_greetings', 'messagecardbgcolor');
 
                 foreach ($messages as $m) {
-                    $text .= html_writer::start_tag('div', array('class' => 'card', 'style' => "background: $cardbackgroundcolor"));
-                    $text .= html_writer::start_tag('div', array('class' => 'card-body'));
-                    $text .= html_writer::tag('p', format_text($m->message, FORMAT_PLAIN), array('class' => 'card-text'));
+                    $text .= html_writer::start_tag('div', ['class' => 'card', 'style' => "background: $cardbackgroundcolor"]);
+                    $text .= html_writer::start_tag('div', ['class' => 'card-body']);
+                    $text .= html_writer::tag('p', format_text($m->message, FORMAT_PLAIN), ['class' => 'card-text']);
                     $text .= html_writer::tag('p', get_string('postedby', 'block_greetings', $m->firstname),
-                                                array('class' => 'card-text'));
-                    $text .= html_writer::start_tag('p', array('class' => 'card-text'));
-                    $text .= html_writer::tag('small', userdate($m->timecreated), array('class' => 'text-muted'));
+                                                ['class' => 'card-text']);
+                    $text .= html_writer::start_tag('p', ['class' => 'card-text']);
+                    $text .= html_writer::tag('small', userdate($m->timecreated), ['class' => 'text-muted']);
                     $text .= html_writer::end_tag('p');
 
                     // Wrapping this within the "Delete" capability check for simplicity.
                     // You can also create another capability for "Edit messages" if you want.
                     if ($deleteanypost || ($deletepost && $m->userid == $USER->id)) {
-                        $text .= html_writer::start_tag('p', array('class' => 'card-footer text-center'));
+                        $text .= html_writer::start_tag('p', ['class' => 'card-footer text-center']);
 
                         $text .= html_writer::link(
                             new moodle_url(
