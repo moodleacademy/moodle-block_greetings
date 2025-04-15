@@ -69,23 +69,26 @@ class block_greetings extends block_base {
             $this->content->text = $this->config->text;
         } else {
             $context = $this->page->context;
-            $text = block_greetings_get_greeting($USER);
+
+            $templatedata = ['usergreeting' => block_greetings_get_greeting($USER)];
+            $text = $OUTPUT->render_from_template('block_greetings/greeting_message', $templatedata);
 
             $allowpost = has_capability('block/greetings:postmessages', $context);
             $deletepost = has_capability('block/greetings:deleteownmessage', $context);
             $deleteanypost = has_capability('block/greetings:deleteanymessage', $context);
+            $allowviewpost = has_capability('block/greetings:viewmessages', $context);
 
             $action = optional_param('action', '', PARAM_TEXT);
 
             if ($action == 'del') {
                 require_sesskey();
 
-                $id = required_param('id', PARAM_TEXT);
+                $id = required_param('id', PARAM_INT);
 
                 if ($deleteanypost || $deletepost) {
                     $params = ['id' => $id];
 
-                    // Users without permission should only delete their own post.
+                    // Users without permission can only delete their own post.
                     if (!$deleteanypost) {
                         $params += ['userid' => $USER->id];
                     }
@@ -93,7 +96,7 @@ class block_greetings extends block_base {
                     // Todo: Confirm before deleting.
                     $DB->delete_records('block_greetings_messages', $params);
 
-                    redirect($CFG->wwwroot . '/my'); // Reload this page to remove visible sesskey.
+                    redirect($CFG->wwwroot . '/my/'); // Reload this page to remove visible sesskey.
                 }
             }
 
@@ -112,7 +115,7 @@ class block_greetings extends block_base {
 
                     $DB->insert_record('block_greetings_messages', $record);
 
-                    redirect($CFG->wwwroot . '/my'); // Reload this page to load empty form.
+                    redirect($CFG->wwwroot . '/my/'); // Reload this page to load empty form.
                 }
             }
 
@@ -120,7 +123,7 @@ class block_greetings extends block_base {
                 $text .= $messageform->render();
             }
 
-            if (has_capability('block/greetings:viewmessages', $context)) {
+            if ($allowviewpost) {
                 $userfields = \core_user\fields::for_name()->with_identity($context);
                 $userfieldssql = $userfields->get_sql('u');
 
@@ -131,7 +134,12 @@ class block_greetings extends block_base {
 
                 $messages = $DB->get_records_sql($sql);
 
-                $text .= $OUTPUT->box_start('card-columns');
+                foreach ($messages as $m) {
+                    // Can this user delete this post?
+                    // Attach a flag to each message here because we can't do this in mustache.
+                    // Using this flag for the edit option too. You can also create another capability for "Edit messages".
+                    $m->candelete = ($deleteanypost || ($deletepost && $m->userid == $USER->id));
+                }
 
                 // Card background colour.
                 // Use value from block instance, if set. Otherwise use global value.
@@ -139,46 +147,12 @@ class block_greetings extends block_base {
                                         ? $this->config->messagecardbgcolor
                                         : get_config('block_greetings', 'messagecardbgcolor');
 
-                foreach ($messages as $m) {
-                    $text .= html_writer::start_tag('div', ['class' => 'card', 'style' => "background: $cardbackgroundcolor"]);
-                    $text .= html_writer::start_tag('div', ['class' => 'card-body']);
-                    $text .= html_writer::tag('p', format_text($m->message, FORMAT_PLAIN), ['class' => 'card-text']);
-                    $text .= html_writer::tag('p', get_string('postedby', 'block_greetings', $m->firstname),
-                                                ['class' => 'card-text']);
-                    $text .= html_writer::start_tag('p', ['class' => 'card-text']);
-                    $text .= html_writer::tag('small', userdate($m->timecreated), ['class' => 'text-muted']);
-                    $text .= html_writer::end_tag('p');
+                $templatedata = [
+                    'messages' => array_values($messages),
+                    'cardbackgroundcolor' => $cardbackgroundcolor,
+                ];
 
-                    // Wrapping this within the "Delete" capability check for simplicity.
-                    // You can also create another capability for "Edit messages" if you want.
-                    if ($deleteanypost || ($deletepost && $m->userid == $USER->id)) {
-                        $text .= html_writer::start_tag('p', ['class' => 'card-footer text-center']);
-
-                        $text .= html_writer::link(
-                            new moodle_url(
-                                '/my/',
-                                ['id' => $m->id]
-                            ),
-                            $OUTPUT->pix_icon('i/edit', get_string('edit')),
-                            ['role' => 'button']
-                        );
-
-                        $text .= html_writer::link(
-                            new moodle_url(
-                                '/my/',
-                                ['action' => 'del', 'id' => $m->id, 'sesskey' => sesskey()]
-                            ),
-                            $OUTPUT->pix_icon('t/delete', get_string('delete')),
-                            ['role' => 'button']
-                        );
-                        $text .= html_writer::end_tag('p');
-                    }
-
-                    $text .= html_writer::end_tag('div');
-                    $text .= html_writer::end_tag('div');
-                }
-
-                $text .= $OUTPUT->box_end();
+                $text .= $OUTPUT->render_from_template('block_greetings/messages', $templatedata);
             }
 
             $this->content->text = $text;
