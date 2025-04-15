@@ -20,7 +20,7 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-require_once($CFG->dirroot . '/local/greetings/lib.php');
+require_once($CFG->dirroot . '/blocks/greetings/lib.php');
 
 /**
  * Greetings library tests
@@ -40,7 +40,7 @@ final class lib_test extends \advanced_testcase {
      * @param string|null $country User country
      * @param string $langstring Greetings message language string
      */
-    public function test_block_greetings_get_greeting(?string $country, string $langstring): string {
+    public function test_block_greetings_get_greeting(?string $country, string $langstring): void {
         $user = null;
         if (!empty($country)) {
             $this->resetAfterTest(true);
