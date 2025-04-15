@@ -26,6 +26,13 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/blocks/greetings/lib.php');
 
+/**
+ * Block greetings is defined here.
+ *
+ * @package     block_greetings
+ * @copyright   2023 Your Name <you@example.com>
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_greetings extends block_base {
 
     /**
@@ -83,7 +90,7 @@ class block_greetings extends block_base {
                         $params += ['userid' => $USER->id];
                     }
 
-                    // TODO: Confirm before deleting.
+                    // Todo: Confirm before deleting.
                     $DB->delete_records('block_greetings_messages', $params);
 
                     redirect($CFG->wwwroot . '/my'); // Reload this page to remove visible sesskey.

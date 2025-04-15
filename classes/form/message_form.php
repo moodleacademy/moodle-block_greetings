@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * This file defines the Greeting message form.
+ *
  * @package     block_greetings
  * @copyright  2022 Your name <your@email>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,6 +28,13 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
 
+/**
+ * Greeting message form.
+ *
+ * @package     block_greetings
+ * @copyright  2022 Your name <your@email>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class message_form extends \moodleform {
     /**
      * Define the form.

@@ -29,7 +29,7 @@ require_once($CFG->dirroot . '/local/greetings/lib.php');
  * @copyright   2022 Your name <your@email>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class lib_test extends \advanced_testcase {
+final class lib_test extends \advanced_testcase {
 
     /**
      * Testing the translation of greeting messages.
