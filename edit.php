@@ -42,7 +42,7 @@ $id = required_param('id', PARAM_INT);
 
 // Get record greeting from database.
 if (!$result = $DB->get_record('block_greetings_messages', ['id' => $id])) {
-    throw new moodle_exception('norecordfound', 'local_greetings');
+    throw new moodle_exception('norecordfound', 'block_greetings');
 }
 
 // Just using the delete capability check.
@@ -50,7 +50,7 @@ if (!$result = $DB->get_record('block_greetings_messages', ['id' => $id])) {
 $canedit = has_capability('block/greetings:deleteanymessage', $context) ||
     (has_capability('block/greetings:deleteownmessage', $context) && $result->userid == $USER->id);
 
-$messageform = new \local_greetings\form\message_form(null, ['message' => $result]);
+$messageform = new \block_greetings\form\message_form(null, ['message' => $result]);
 
 if ($canedit && $data = $messageform->get_data()) {
     $message = required_param('message', PARAM_TEXT);
@@ -70,7 +70,7 @@ echo $OUTPUT->header();
 if ($canedit) {
     $messageform->display();
 } else {
-    throw new moodle_exception('cannoteditmessage', 'local_greetings');
+    throw new moodle_exception('cannoteditmessage', 'block_greetings');
 }
 
 echo $OUTPUT->footer();
